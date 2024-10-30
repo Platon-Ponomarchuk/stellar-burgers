@@ -6,7 +6,8 @@ import {
   NotFound404,
   Profile,
   ProfileOrders,
-  Register
+  Register,
+  ResetPassword
 } from '@pages';
 import '../../index.css';
 import styles from './app.module.css';
@@ -18,11 +19,21 @@ import {
   OrderInfo,
   ProtectedRoute
 } from '@components';
-import { BrowserRouter, Route, Routes, useLocation } from 'react-router-dom';
+import { Route, Routes, useLocation } from 'react-router-dom';
+import { useDispatch } from '../../services/store';
+import { fetchUser } from '../../services/Slices/UserSlice';
+import { useEffect } from 'react';
+import { getIngredientsThunk } from '../../services/Slices/IngredientsSlice';
 
 const App = () => {
   const location = useLocation();
-  const backgroundLocation = location.state?.backgroundLocation;
+  const dispatch = useDispatch();
+  const backgroundLocation = location.state?.background;
+
+  useEffect(() => {
+    dispatch(getIngredientsThunk());
+    dispatch(fetchUser());
+  }, []);
 
   return (
     <div className={styles.app}>
@@ -56,9 +67,17 @@ const App = () => {
           }
         />
         <Route
-          path='/profile'
+          path='/reset-password'
           element={
             <ProtectedRoute>
+              <ResetPassword />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path='/profile'
+          element={
+            <ProtectedRoute inAuth={false}>
               <Profile />
             </ProtectedRoute>
           }
@@ -66,11 +85,12 @@ const App = () => {
         <Route
           path='/profile/orders'
           element={
-            <ProtectedRoute>
+            <ProtectedRoute inAuth={false}>
               <ProfileOrders />
             </ProtectedRoute>
           }
         />
+        <Route path='/ingredients/:id' element={<IngredientDetails />} />
       </Routes>
 
       {backgroundLocation && (
@@ -78,7 +98,12 @@ const App = () => {
           <Route
             path='/feed/:number'
             element={
-              <Modal title={'info'} onClose={() => {}}>
+              <Modal
+                title={'info'}
+                onClose={() => {
+                  history.back();
+                }}
+              >
                 <OrderInfo />
               </Modal>
             }
@@ -86,7 +111,12 @@ const App = () => {
           <Route
             path='/ingredients/:id'
             element={
-              <Modal title={'ingredient'} onClose={() => {}}>
+              <Modal
+                title={'ingredient'}
+                onClose={() => {
+                  history.back();
+                }}
+              >
                 <IngredientDetails />
               </Modal>
             }
@@ -94,9 +124,16 @@ const App = () => {
           <Route
             path='/profile/orders/:number'
             element={
-              <Modal title={'order'} onClose={() => {}}>
-                <OrderInfo />
-              </Modal>
+              <ProtectedRoute inAuth={false}>
+                <Modal
+                  title={'order'}
+                  onClose={() => {
+                    history.back();
+                  }}
+                >
+                  <OrderInfo />
+                </Modal>
+              </ProtectedRoute>
             }
           />
         </Routes>
