@@ -1,4 +1,4 @@
-import { Navigate } from 'react-router-dom';
+import { Navigate, useLocation } from 'react-router-dom';
 import { selectUser } from '../../services/Slices/UserSlice';
 import { useSelector } from '../../services/store';
 
@@ -10,13 +10,15 @@ type ProtectedProps = {
 export const ProtectedRoute = ({ inAuth = true, children }: ProtectedProps) => {
   const user = useSelector(selectUser);
   const isAuth = user.email !== '';
+  const location = useLocation();
 
   if (!isAuth && !inAuth) {
-    return <Navigate to='/login' />;
+    return <Navigate to='/login' state={{ from: location }} />;
   }
 
   if (isAuth && inAuth) {
-    return <Navigate to='/' />;
+    const from = location.state?.from || { pathname: '/' };
+    return <Navigate to={from} />;
   }
 
   return children;

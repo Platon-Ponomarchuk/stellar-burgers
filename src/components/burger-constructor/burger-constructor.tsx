@@ -12,17 +12,24 @@ import {
   selectCurrentOrder,
   selectOrderRequest
 } from '../../services/Slices/OrderSlice';
-import { selectUser } from '../../services/Slices/UserSlice';
+import { selectIsAuth } from '../../services/Slices/UserSlice';
+import { useNavigate } from 'react-router-dom';
 
 export const BurgerConstructor: FC = () => {
   const dispatch = useDispatch();
   const constructorItems = useSelector(selectBurgerConstructor);
   const orderRequest = useSelector(selectOrderRequest);
   const orderModalData = useSelector(selectCurrentOrder);
-  const user = useSelector(selectUser);
+  const isAuth = useSelector(selectIsAuth);
+  const navigate = useNavigate();
 
   const onOrderClick = () => {
-    if (!constructorItems.bun || orderRequest || !user) return;
+    if (!constructorItems.bun || orderRequest) return;
+
+    if (!isAuth) {
+      navigate('/login');
+      return;
+    }
 
     if (constructorItems) {
       const orderIngredients = [];

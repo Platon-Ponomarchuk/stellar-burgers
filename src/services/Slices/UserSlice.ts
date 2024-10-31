@@ -10,10 +10,10 @@ import {
   TRegisterData,
   updateUserApi
 } from '@api';
-import { deleteCookie, getCookie, setCookie } from '../../utils/cookie';
+import { deleteCookie, setCookie } from '../../utils/cookie';
 
 export const fetchUser = createAsyncThunk('user/get', async () => {
-  if (!getCookie('accessToken') && localStorage.getItem('refreshToken')) {
+  if (localStorage.getItem('refreshToken')) {
     await refreshToken();
   }
 
