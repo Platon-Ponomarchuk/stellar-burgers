@@ -9,7 +9,7 @@ import {
   TLoginData,
   TRegisterData,
   updateUserApi
-} from '@api';
+} from '../../../utils/burger-api';
 import { deleteCookie, setCookie } from '../../../utils/cookie';
 
 export const fetchUser = createAsyncThunk('user/get', async () => {
@@ -22,17 +22,48 @@ export const fetchUser = createAsyncThunk('user/get', async () => {
 
 export const loginUser = createAsyncThunk(
   'user/login',
-  async (data: TLoginData) => await loginUserApi(data)
+  async (data: TLoginData) => {
+    const res = await loginUserApi(data);
+
+    if (!res.success) {
+      return Promise.reject(res);
+    }
+
+    localStorage.setItem('refreshToken', res.refreshToken);
+    setCookie('accessToken', res.accessToken);
+
+    return res.user;
+  }
 );
 
 export const regidterUser = createAsyncThunk(
   'user/register',
-  async (data: TRegisterData) => await registerUserApi(data)
+  async (data: TRegisterData) => {
+    const res = await registerUserApi(data);
+
+    if (!res.success) {
+      return Promise.reject(res);
+    }
+
+    localStorage.setItem('refreshToken', res.refreshToken);
+    setCookie('accessToken', res.accessToken);
+
+    return res.user;
+  }
 );
 
 export const logoutUser = createAsyncThunk(
   'user/logout',
-  async () => await logoutApi()
+  async () => {
+    const {success} = await logoutApi()
+
+    if (!success) {
+      return Promise.reject();
+    }
+
+    deleteCookie('accessToken');
+    localStorage.removeItem('refreshToken');
+  }
 );
 
 export const refreshUser = createAsyncThunk(
@@ -40,7 +71,7 @@ export const refreshUser = createAsyncThunk(
   async (user: TRegisterData) => await updateUserApi(user)
 );
 
-type TInitialState = {
+export type TInitialState = {
   isAuth: boolean;
   user: TUser;
   error: string;
@@ -73,13 +104,12 @@ export const userSlice = createSlice({
       })
       .addCase(fetchUser.rejected, (state, action) => {
         state.isAuth = false;
+        state.error = action.error.message || 'Something went wrong';
       })
       .addCase(loginUser.fulfilled, (state, action) => {
         state.isAuth = true;
-        state.user = action.payload.user;
+        state.user = action.payload;
         state.error = '';
-        localStorage.setItem('refreshToken', action.payload.refreshToken);
-        setCookie('accessToken', action.payload.accessToken);
       })
       .addCase(loginUser.rejected, (state, action) => {
         state.isAuth = false;
@@ -87,10 +117,8 @@ export const userSlice = createSlice({
       })
       .addCase(regidterUser.fulfilled, (state, action) => {
         state.isAuth = true;
-        state.user = action.payload.user;
+        state.user = action.payload;
         state.error = '';
-        localStorage.setItem('refreshToken', action.payload.refreshToken);
-        setCookie('accessToken', action.payload.accessToken);
       })
       .addCase(regidterUser.rejected, (state, action) => {
         state.isAuth = false;
@@ -98,8 +126,6 @@ export const userSlice = createSlice({
       })
       .addCase(logoutUser.fulfilled, (state) => {
         state.isAuth = false;
-        deleteCookie('accessToken');
-        localStorage.removeItem('refreshToken');
         state.user = { email: '', name: '' };
       })
       .addCase(refreshUser.fulfilled, (state, action) => {
