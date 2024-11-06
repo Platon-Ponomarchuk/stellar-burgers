@@ -1,0 +1,17 @@
+{
+  "success": true,
+  "name": "test",
+  "order": {
+    "_id": "1",
+    "status": "done",
+    "name": "test",
+    "createdAt": "9:00:00",
+    "updatedAt": "9:00:00",
+    "number": 123,
+    "ingredients": [
+      "643d69a5c3f7b9001cfa093c",
+      "643d69a5c3f7b9001cfa0941",
+      "643d69a5c3f7b9001cfa093c"
+    ]
+  }
+}
