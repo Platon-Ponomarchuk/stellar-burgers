@@ -52,19 +52,16 @@ export const regidterUser = createAsyncThunk(
   }
 );
 
-export const logoutUser = createAsyncThunk(
-  'user/logout',
-  async () => {
-    const {success} = await logoutApi()
+export const logoutUser = createAsyncThunk('user/logout', async () => {
+  const { success } = await logoutApi();
 
-    if (!success) {
-      return Promise.reject();
-    }
-
-    deleteCookie('accessToken');
-    localStorage.removeItem('refreshToken');
+  if (!success) {
+    return Promise.reject();
   }
-);
+
+  deleteCookie('accessToken');
+  localStorage.removeItem('refreshToken');
+});
 
 export const refreshUser = createAsyncThunk(
   'user/refresh',
