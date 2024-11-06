@@ -25,7 +25,7 @@ describe('Проверка userSlice', () => {
   };
 
   describe('Проверка получения данных пользователя fetchUser', () => {
-    test('[#1] Проверка успешного выполнения fetchUser', async () => {
+    test('[#1] Проверка успешного выполнения fetchUser', () => {
       const action = {
         type: user.fetchUser.fulfilled.type,
         payload: { user: fakeUser }
@@ -35,7 +35,7 @@ describe('Проверка userSlice', () => {
       expect(state).toEqual(expectedFullfilled);
     });
 
-    test('[#2] Проверка неуспешного выполнения fetchUser', async () => {
+    test('[#2] Проверка неуспешного выполнения fetchUser', () => {
       const action = {
         type: user.fetchUser.rejected.type,
         error: { message: 'error' }
@@ -47,7 +47,7 @@ describe('Проверка userSlice', () => {
   });
 
   describe('Проверка логина loginUser', () => {
-    test('[#3] Проверка успешного выполнения loginUser', async () => {
+    test('[#3] Проверка успешного выполнения loginUser', () => {
       const action = {
         type: user.loginUser.fulfilled.type,
         payload: fakeUser
@@ -59,7 +59,7 @@ describe('Проверка userSlice', () => {
       expect(state).toEqual(expectedFullfilled);
     });
 
-    test('[#4] Проверка неуспешного выполнения', async () => {
+    test('[#4] Проверка неуспешного выполнения', () => {
       const action = {
         type: user.loginUser.rejected.type,
         error: { message: 'error' }
@@ -71,7 +71,7 @@ describe('Проверка userSlice', () => {
   });
 
   describe('Проверка регистрации regidterUser', () => {
-    test('[#5] Проверка успешного выполнения regidterUser', async () => {
+    test('[#5] Проверка успешного выполнения regidterUser', () => {
       const action = {
         type: user.regidterUser.fulfilled.type,
         payload: fakeUser
@@ -81,7 +81,7 @@ describe('Проверка userSlice', () => {
       expect(state).toEqual(expectedFullfilled);
     });
 
-    test('[#6] Проверка неуспешного выполнения regidterUser', async () => {
+    test('[#6] Проверка неуспешного выполнения regidterUser', () => {
       const action = {
         type: user.regidterUser.rejected.type,
         error: { message: 'error' }
@@ -93,7 +93,7 @@ describe('Проверка userSlice', () => {
   });
 
   describe('Проверка выхода logoutUser', () => {
-    test('[#7] Проверка успешного выполнения logoutUser', async () => {
+    test('[#7] Проверка успешного выполнения logoutUser', () => {
       const action = {
         type: user.logoutUser.fulfilled.type
       };
@@ -103,7 +103,7 @@ describe('Проверка userSlice', () => {
     });
   });
 
-  test('[#8] Проверка успешного выполнения updateUser', async () => {
+  test('[#8] Проверка успешного выполнения updateUser', () => {
     const action = {
       type: user.refreshUser.fulfilled.type,
       payload: { user: { email: 'test1', name: 'test1' } }
