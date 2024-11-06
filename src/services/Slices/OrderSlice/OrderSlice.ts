@@ -5,7 +5,7 @@ import {
   getOrderByNumberApi,
   getOrdersApi,
   orderBurgerApi
-} from '@api';
+} from '../../../utils/burger-api';
 
 export const fetchAllOrders = createAsyncThunk(
   'orders/get/all',
@@ -27,7 +27,7 @@ export const fetchOrderById = createAsyncThunk(
   async (id: number) => await getOrderByNumberApi(id)
 );
 
-type TInitialState = {
+export type TInitialState = {
   allOrders: { orders: TOrder[]; total: number; totalToday: number };
   userOrders: TOrder[];
   orderRequest: boolean;
