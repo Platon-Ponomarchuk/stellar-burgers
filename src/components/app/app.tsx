@@ -21,9 +21,9 @@ import {
 } from '@components';
 import { Route, Routes, useLocation } from 'react-router-dom';
 import { useDispatch } from '../../services/store';
-import { fetchUser } from '../../services/Slices/UserSlice';
+import { fetchUser } from '../../services/Slices/UserSlice/UserSlice';
 import { useEffect } from 'react';
-import { getIngredientsThunk } from '../../services/Slices/IngredientsSlice';
+import { getIngredientsThunk } from '../../services/Slices/IngredientsSlice/IngredientsSlice';
 
 const App = () => {
   const location = useLocation();

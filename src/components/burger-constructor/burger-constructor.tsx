@@ -5,14 +5,14 @@ import { useDispatch, useSelector } from '../../services/store';
 import {
   clearConstructor,
   selectBurgerConstructor
-} from '../../services/Slices/ConstructorSlice';
+} from '../../services/Slices/ConstructorSlice/ConstructorSlice';
 import {
   clearOrder,
   fetchOrder,
   selectCurrentOrder,
   selectOrderRequest
-} from '../../services/Slices/OrderSlice';
-import { selectIsAuth } from '../../services/Slices/UserSlice';
+} from '../../services/Slices/OrderSlice/OrderSlice';
+import { selectIsAuth } from '../../services/Slices/UserSlice/UserSlice';
 import { useNavigate } from 'react-router-dom';
 
 export const BurgerConstructor: FC = () => {
@@ -39,6 +39,7 @@ export const BurgerConstructor: FC = () => {
           orderIngredients.push(ingredient._id);
         }
       );
+      orderIngredients.push(constructorItems.bun._id);
 
       dispatch(fetchOrder(orderIngredients));
     }

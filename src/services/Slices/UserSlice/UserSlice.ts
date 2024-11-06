@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { TUser } from '../../utils/types';
+import { TUser } from '../../../utils/types';
 import {
   getUserApi,
   loginUserApi,
@@ -10,7 +10,7 @@ import {
   TRegisterData,
   updateUserApi
 } from '@api';
-import { deleteCookie, setCookie } from '../../utils/cookie';
+import { deleteCookie, setCookie } from '../../../utils/cookie';
 
 export const fetchUser = createAsyncThunk('user/get', async () => {
   if (localStorage.getItem('refreshToken')) {

@@ -5,7 +5,7 @@ import { OrderCardProps } from './type';
 import { TIngredient } from '@utils-types';
 import { OrderCardUI } from '../ui/order-card';
 import { useSelector, useDispatch } from '../../services/store';
-import { selectIngredients } from '../../services/Slices/IngredientsSlice';
+import { selectIngredients } from '../../services/Slices/IngredientsSlice/IngredientsSlice';
 
 const maxIngredients = 6;
 
