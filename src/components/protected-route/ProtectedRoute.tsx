@@ -1,5 +1,5 @@
 import { Navigate, useLocation } from 'react-router-dom';
-import { selectUser } from '../../services/Slices/UserSlice';
+import { selectUser } from '../../services/Slices/UserSlice/UserSlice';
 import { useSelector } from '../../services/store';
 
 type ProtectedProps = {

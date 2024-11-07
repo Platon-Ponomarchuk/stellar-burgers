@@ -5,7 +5,7 @@ import { FC, useEffect } from 'react';
 import {
   fetchAllOrders,
   selectAllOrders
-} from '../../services/Slices/OrderSlice';
+} from '../../services/Slices/OrderSlice/OrderSlice';
 import { useDispatch, useSelector } from '../../services/store';
 
 export const Feed: FC = () => {

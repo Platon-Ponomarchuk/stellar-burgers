@@ -5,7 +5,7 @@ import {
   clearError,
   loginUser,
   selectError
-} from '../../services/Slices/UserSlice';
+} from '../../services/Slices/UserSlice/UserSlice';
 import { Navigate } from 'react-router-dom';
 
 export const Login: FC = () => {

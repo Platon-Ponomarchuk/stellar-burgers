@@ -3,12 +3,12 @@ import { Preloader } from '../ui/preloader';
 import { OrderInfoUI } from '../ui/order-info';
 import { TIngredient } from '@utils-types';
 import { useDispatch, useSelector } from '../../services/store';
-import { selectIngredients } from '../../services/Slices/IngredientsSlice';
+import { selectIngredients } from '../../services/Slices/IngredientsSlice/IngredientsSlice';
 import {
   clearOrder,
   fetchOrderById,
   selectCurrentOrder
-} from '../../services/Slices/OrderSlice';
+} from '../../services/Slices/OrderSlice/OrderSlice';
 import { useParams } from 'react-router-dom';
 
 export const OrderInfo: FC = () => {

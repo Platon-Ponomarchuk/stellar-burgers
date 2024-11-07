@@ -21,9 +21,9 @@ import {
 } from '@components';
 import { Route, Routes, useLocation } from 'react-router-dom';
 import { useDispatch } from '../../services/store';
-import { fetchUser } from '../../services/Slices/UserSlice';
+import { fetchUser } from '../../services/Slices/UserSlice/UserSlice';
 import { useEffect } from 'react';
-import { getIngredientsThunk } from '../../services/Slices/IngredientsSlice';
+import { getIngredientsThunk } from '../../services/Slices/IngredientsSlice/IngredientsSlice';
 
 const App = () => {
   const location = useLocation();
@@ -91,6 +91,15 @@ const App = () => {
           }
         />
         <Route path='/ingredients/:id' element={<IngredientDetails />} />
+        <Route path='/feed/:number' element={<OrderInfo />} />
+        <Route
+          path='/profile/orders/:number'
+          element={
+            <ProtectedRoute inAuth={false}>
+              <OrderInfo />
+            </ProtectedRoute>
+          }
+        />
       </Routes>
 
       {backgroundLocation && (
@@ -99,7 +108,7 @@ const App = () => {
             path='/feed/:number'
             element={
               <Modal
-                title={'info'}
+                title={''}
                 onClose={() => {
                   history.back();
                 }}
@@ -112,7 +121,7 @@ const App = () => {
             path='/ingredients/:id'
             element={
               <Modal
-                title={'ingredient'}
+                title={'Детали ингредиента'}
                 onClose={() => {
                   history.back();
                 }}
@@ -126,7 +135,7 @@ const App = () => {
             element={
               <ProtectedRoute inAuth={false}>
                 <Modal
-                  title={'order'}
+                  title={''}
                   onClose={() => {
                     history.back();
                   }}
